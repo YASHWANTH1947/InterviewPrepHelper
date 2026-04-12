@@ -9,7 +9,15 @@ import cookeParser from "cookie-parser";
 const app = express();
 
 // Middleware
-app.use(cors());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // No wildcard! Must match your frontend URL
+    credentials: true, // Essential for sending/receiving cookies
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 app.use(express.json());
 app.use(cookeParser());
 app.use("/api/auth", authRoutes);

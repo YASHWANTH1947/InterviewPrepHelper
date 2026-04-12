@@ -128,4 +128,26 @@ const authLogoutController = async (req, res) => {
   res.status(200).json({ message: "Logout successful" });
 };
 
-export { authLoginController, authRegisterController, authLogoutController };
+const getMeController = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+
+    res.status(200).json({
+      message: "User details fetched successfully",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.log("Error inside get me controler,", error);
+  }
+};
+
+export {
+  authLoginController,
+  authRegisterController,
+  authLogoutController,
+  getMeController,
+};

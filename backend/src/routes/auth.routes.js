@@ -4,6 +4,7 @@ import {
   authLoginController,
   authRegisterController,
   authLogoutController,
+  getMeController,
 } from "../controllers/auth.controllers.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 const router = Router();
@@ -29,5 +30,6 @@ router.post("/register", authRegisterController);
  * @access Private
  */
 router.post("/logout", authMiddleware, authLogoutController);
+router.get("/getMe", authMiddleware, getMeController);
 
 export default router;
