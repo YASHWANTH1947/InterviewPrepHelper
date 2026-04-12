@@ -1,0 +1,2 @@
+OcBvT3P57BWkYewm //password
+mongodb+srv://yashwanthreddy1947_db_user:OcBvT3P57BWkYewm@cluster0.skbsdb8.mongodb.net/?appName=Cluster0 //uri
