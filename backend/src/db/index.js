@@ -6,7 +6,7 @@ const connectDB = async () => {
       dbName: "interview_guide",
     });
 
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB is successfully  Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log("Error while connecting db ,inside db/index.js," + error);
   }

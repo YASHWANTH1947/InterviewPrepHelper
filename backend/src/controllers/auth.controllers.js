@@ -120,7 +120,10 @@ const authRegisterController = async (req, res) => {
 
 const authLogoutController = async (req, res) => {
   console.log("A user successfully logged out");
-
+  const token = req.cookies.token;
+  if (token) {
+    await BlackList.create({ token });
+  }
   res.clearCookie("token");
   res.status(200).json({ message: "Logout successful" });
 };
