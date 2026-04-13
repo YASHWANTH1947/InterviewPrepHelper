@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
+import aiRoutes from "./routes/interviewReport.routes.js";
 import connectDB from "./db/index.js";
 import cookeParser from "cookie-parser";
 
@@ -21,6 +22,7 @@ app.use(
 app.use(express.json());
 app.use(cookeParser());
 app.use("/api/auth", authRoutes);
+app.use("/api/interviewReport", aiRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the Interview Guide API");
 });
