@@ -134,17 +134,25 @@ const authLogoutController = async (req, res) => {
   if (token) {
     await BlackList.create({ token });
   }
-  const isProduction = process.env.NODE_ENV === "production";
+  const isSecure = req.secure || req.headers["x-forwarded-proto"] === "https";
   res.clearCookie("token", {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "none" : "lax",
+    secure: isSecure,
+    sameSite: isSecure ? "none" : "lax",
   });
   res.status(200).json({ message: "Logout successful" });
 };
 
 const getMeController = async (req, res) => {
   try {
+    // Verify token is not blacklisted
+    const token = req.cookies.token;
+    const isTokenBlackListed = await BlackList.findOne({ token });
+    if (isTokenBlackListed) {
+      res.clearCookie("token");
+      return res.status(401).json({ message: "Token is blacklisted" });
+    }
+
     const user = await User.findById(req.user.userId);
 
     res.status(200).json({

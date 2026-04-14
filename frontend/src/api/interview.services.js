@@ -4,6 +4,27 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
   withCredentials: true,
 });
+
+// Add response interceptor for debugging
+api.interceptors.response.use(
+  (response) => {
+    console.log(
+      "Interview API Response:",
+      response.config.url,
+      response.status,
+    );
+    return response;
+  },
+  (error) => {
+    console.error("Interview API Error:", {
+      url: error.config?.url,
+      status: error.response?.status,
+      message: error.response?.data?.message || error.message,
+    });
+    return Promise.reject(error);
+  },
+);
+
 /* 
 form data is used when you send key value pairs, like the value can be file, here we are trying to send pdf file from frontend to backend where it will be recieved by multer.form data is browser api 
 

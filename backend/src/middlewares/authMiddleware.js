@@ -6,8 +6,12 @@ import BlackList from "../models/blackList.models.js";
 /** *check if the user is authenticated by verifying the JWT token in the request cookies. * If the token is valid, attach the user information to the request object and call the next middleware. * If the token is invalid or missing, return a 401 Unauthorized response. * @param {*} req * @param {*} res * @param {*} next */
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
+  console.log("Auth middleware triggered on", req.method, req.path);
+  console.log("Cookies received:", req.cookies);
+  console.log("Token present:", !!token);
+
   if (!token) {
-    console.log("A token is not pressnt in in the request");
+    console.log("A token is not present in the request");
     return res.status(401).json({ message: "Unauthorized, No token provided" });
   }
   try {

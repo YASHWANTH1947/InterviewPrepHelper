@@ -19,8 +19,9 @@ app.use(
       "https://interview-prep-helper.vercel.app",
     ].filter(Boolean),
     credentials: true, // Essential for sending/receiving cookies
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200,
   }),
 );
 app.use(express.json());
