@@ -105,19 +105,19 @@ The frontend runs on `http://localhost:5173` and expects the backend at `http://
 
 ### Auth — `/api/auth`
 
-| Method | Path       | Description          |
-|--------|------------|----------------------|
-| POST   | `/register` | Create a new account |
+| Method | Path        | Description             |
+|--------|-------------|-------------------------|
+| POST   | `/register` | Create a new account    |
 | POST   | `/login`    | Login, sets auth cookie |
-| POST   | `/logout`   | Clears auth cookie   |
-| GET    | `/getMe`    | Returns current user |
+| POST   | `/logout`   | Clears auth cookie      |
+| GET    | `/getMe`    | Returns current user    |
 
 ### Interview Reports — `/api/interviewReport`
 
 All routes require authentication.
 
-| Method | Path    | Description                                              |
-|--------|---------|----------------------------------------------------------|
-| POST   | `/`     | Generate a new report (multipart: `file`, `jobDescription`, `selfDescription`) |
-| GET    | `/`     | Get all reports for the logged-in user (summary: title, matchScore, createdAt) |
-| GET    | `/:id`  | Get a single report by ID (full data)                    |
+| Method | Path   | Description                                                                      |
+|--------|--------|----------------------------------------------------------------------------------|
+| POST   | `/`    | Generate a new report (multipart: `file`, `jobDescription`, `selfDescription`)   |
+| GET    | `/`    | Get all reports for the logged-in user (summary: title, matchScore, createdAt)   |
+| GET    | `/:id` | Get a single report by ID (full data)                                            |
