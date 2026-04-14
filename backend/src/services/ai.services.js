@@ -1,13 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
-
 import { z } from "zod";
-
-import { zodToJsonSchema } from "zod-to-json-Schema";
-
-import puppeteer from "puppeteer";
+import { zodToJsonSchema } from "zod-to-json-schema";
 
 const ai = new GoogleGenAI({
-  apiKey: "AIzaSyABQAUDDpgNb9YAKljG4KXU3MBvXa5Ioh4",
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 async function experiment() {

@@ -27,13 +27,16 @@ const authLoginController = async (req, res) => {
       return res.status(400).json({ message: "Password is incorrect" });
     }
     const token = jwt.sign(
-      { userId: user._id, userEmail: user.email },
+      { userId: user._id, userEmail: user.email, username: user.username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
+    const isProduction = process.env.NODE_ENV === "production";
     const options = {
       expires: new Date(Date.now() + 3600000),
       httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
     };
     console.log("A user successfully loged in,", user);
     res.cookie("token", token, options);
@@ -85,13 +88,16 @@ const authRegisterController = async (req, res) => {
       password: hashedPassword,
     });
     const token = jwt.sign(
-      { userId: newUser._id, userEmail: newUser.email },
+      { userId: newUser._id, userEmail: newUser.email, username: newUser.username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
+    const isProduction = process.env.NODE_ENV === "production";
     const options = {
       expires: new Date(Date.now() + 3600000),
       httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
     };
     res.cookie("token", token, options);
     res.status(201).json({
@@ -124,7 +130,12 @@ const authLogoutController = async (req, res) => {
   if (token) {
     await BlackList.create({ token });
   }
-  res.clearCookie("token");
+  const isProduction = process.env.NODE_ENV === "production";
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  });
   res.status(200).json({ message: "Logout successful" });
 };
 
