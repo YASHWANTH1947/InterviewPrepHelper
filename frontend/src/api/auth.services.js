@@ -5,6 +5,8 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const extractUser = (response) => response.data?.user ?? null;
+
 const registerUser = async ({ username, email, password }) => {
   try {
     const response = await api.post("/api/auth/register", {
@@ -12,9 +14,10 @@ const registerUser = async ({ username, email, password }) => {
       email,
       password,
     });
-    return response.data;
+    return extractUser(response);
   } catch (error) {
     console.log("Error spoted inside api services,register", error);
+    throw error;
   }
 };
 
@@ -24,9 +27,10 @@ const loginUser = async ({ email, password }) => {
       email,
       password,
     });
-    return response.data;
+    return extractUser(response);
   } catch (error) {
     console.log("Error spotted inside api services,login,", error);
+    throw error;
   }
 };
 
@@ -36,24 +40,23 @@ const logoutUser = async () => {
     return response.data;
   } catch (error) {
     console.log("Error spotted inside api services,logout", error);
+    throw error;
   }
 };
 
 const getMe = async () => {
   try {
     const response = await api.get("/api/auth/getMe");
-    return response.data; // If successful (200 OK), return the user data
+    return extractUser(response);
   } catch (error) {
-    // 1. Log the error for your own debugging
     console.log(
       "Error inside getMe service:",
       error.response?.data || error.message,
     );
-
-    // 2. CRITICAL: Throw the error so React Query receives a FAILURE, not 'undefined'
-    // This allows isLoading to flip to false and 'isError' to become true.
     throw error;
   }
 };
+
+const getInterviewReport = async () => {};
 
 export { logoutUser, loginUser, registerUser, getMe };

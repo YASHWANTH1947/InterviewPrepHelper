@@ -1,0 +1,11 @@
+/src
+  /api            # Logic for connecting to the Backend
+  /assets         # Images, icons, global CSS
+  /components     # Small, reusable UI pieces (Buttons, Inputs, Modals)
+  /context        # Global State (Auth status, User info)
+  /hooks          # Custom logic (e.g., useChat, useAuth)
+  /layouts        # Wrapper components (Navbar + Footer containers)
+  /pages          # Full views (Login, Home, ChatRoom)
+  /utils          # Helper functions (Date formatters, Validators)
+  App.jsx         # Main Routing configuration
+  main.jsx        # Entry point

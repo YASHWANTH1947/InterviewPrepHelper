@@ -1,30 +1,27 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { getMe } from "./api/auth.services.js";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Home from "./pages/Home.jsx";
+import InterviewReport from "./pages/InterviewReport.jsx";
+import InterviewReportResult from "./pages/InterviewReportResult.jsx";
+
 function App() {
-  const queryClient = useQueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false, // This stops the constant background calling
-        retry: false, // Optional: stops it from trying 3 times on failure
-      },
-    },
-  });
   const { data: user, isLoading } = useQuery({
-    queryKey: ["authUser"], // The "ID" for this user's data in the cache
-    queryFn: getMe, // Call your getMe service
-    retry: false, // If 401 Unauthorized, don't try again
+    queryKey: ["authUser"],
+    queryFn: getMe,
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading)
     return (
-      <div className="flex h-screen items-center justify-center">
-        Loading...
+      <div className="flex min-h-screen items-center justify-center bg-transparent px-6 text-slate-100">
+        <div className="glass-panel rounded-[2rem] px-6 py-5 text-sm uppercase tracking-[0.3em] text-cyan-100/80">
+          Loading your workspace
+        </div>
       </div>
     );
 
@@ -40,6 +37,14 @@ function App() {
           element={!user ? <Login /> : <Navigate to="/" />}
         />
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+        <Route
+          path="/interview-report"
+          element={user ? <InterviewReport /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/interview-result"
+          element={user ? <InterviewReportResult /> : <Navigate to="/login" />}
+        />
       </Routes>
     </BrowserRouter>
   );
