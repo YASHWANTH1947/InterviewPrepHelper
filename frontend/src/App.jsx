@@ -7,6 +7,7 @@ import Register from "./pages/Register.jsx";
 import Home from "./pages/Home.jsx";
 import InterviewReport from "./pages/InterviewReport.jsx";
 import InterviewReportResult from "./pages/InterviewReportResult.jsx";
+import PreviousReports from "./pages/PreviousReports.jsx";
 
 function App() {
   const { data: user, isLoading } = useQuery({
@@ -44,6 +45,10 @@ function App() {
         <Route
           path="/interview-result"
           element={user ? <InterviewReportResult /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/previous-reports"
+          element={user ? <PreviousReports /> : <Navigate to="/login" />}
         />
       </Routes>
     </BrowserRouter>

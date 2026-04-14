@@ -94,6 +94,13 @@ const Home = () => {
             </div>
 
             <Link
+              to="/previous-reports"
+              className="rounded-full border border-violet-300/20 bg-violet-300/10 px-5 py-2 text-sm font-semibold text-violet-200 transition hover:bg-violet-300/20"
+            >
+              Previous Reports
+            </Link>
+
+            <Link
               to="/interview-report"
               className="rounded-full bg-cyan-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
             >
