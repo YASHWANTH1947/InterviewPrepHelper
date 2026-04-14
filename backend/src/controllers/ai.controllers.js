@@ -47,7 +47,12 @@ const getSingleReport = async (req, res) => {
       return res.status(404).json({ message: "Report not found" });
     }
 
-    res.status(200).json(report);
+    res
+      .status(200)
+      .json({
+        message: `Successfully obtained for user,${req.user.username}`,
+        report: report,
+      });
   } catch (error) {
     res.status(500).json({ message: "Invalid ID format or Server Error" });
   }
