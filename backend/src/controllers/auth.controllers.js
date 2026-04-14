@@ -31,12 +31,12 @@ const authLoginController = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
-    const isProduction = process.env.NODE_ENV === "production";
+    const isSecure = req.secure || req.headers["x-forwarded-proto"] === "https";
     const options = {
       expires: new Date(Date.now() + 3600000),
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? "none" : "lax",
+      secure: isSecure,
+      sameSite: isSecure ? "none" : "lax",
     };
     console.log("A user successfully loged in,", user);
     res.cookie("token", token, options);
@@ -88,16 +88,20 @@ const authRegisterController = async (req, res) => {
       password: hashedPassword,
     });
     const token = jwt.sign(
-      { userId: newUser._id, userEmail: newUser.email, username: newUser.username },
+      {
+        userId: newUser._id,
+        userEmail: newUser.email,
+        username: newUser.username,
+      },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
-    const isProduction = process.env.NODE_ENV === "production";
+    const isSecure = req.secure || req.headers["x-forwarded-proto"] === "https";
     const options = {
       expires: new Date(Date.now() + 3600000),
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? "none" : "lax",
+      secure: isSecure,
+      sameSite: isSecure ? "none" : "lax",
     };
     res.cookie("token", token, options);
     res.status(201).json({
