@@ -1,7 +1,11 @@
 import { Router } from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import upload from "../middlewares/multer.middleware.js";
-import generateInterviewReportController from "../controllers/ai.controllers.js";
+import {
+  generateInterviewReportController,
+  getAllUserReports,
+  getSingleReport,
+} from "../controllers/ai.controllers.js";
 const router = Router();
 console.log("Interview routes are being trigered!!");
 
@@ -11,5 +15,6 @@ router.post(
   upload.single("file"),
   generateInterviewReportController,
 );
-
+router.get("/:id", authMiddleware, getSingleReport);
+router.get("/", authMiddleware, getAllUserReports);
 export default router;
