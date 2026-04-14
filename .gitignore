@@ -7,7 +7,7 @@ yarn.lock
 .env
 .env.local
 .env.*.local
-
+.env.production
 # Backend
 backend/node_modules/
 backend/dist/
